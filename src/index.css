@@ -57,14 +57,12 @@ img {
     grid-template-columns: repeat(5, 1fr);
   }
 }
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 600px) {
   .images-container {
-    grid-template-columns:repeat(1,100%);
+    grid-template-columns: repeat(2, 1fr);
   }
-  .grid-col-span {
-  grid-column: auto;
 }
-}
+
 .image-title {
   opacity: 0;
   position: absolute;
