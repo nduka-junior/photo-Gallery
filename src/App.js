@@ -13,7 +13,7 @@ function App() {
   const [Loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [totalResults, setTotalResults] = useState(0);
-  const [imagesPerPage] = useState(4);
+  const [imagesPerPage] = useState(30);
   const [Page, setPage] = useState(1);
 
   const _DATA = usePagination(images, imagesPerPage);
@@ -21,14 +21,13 @@ function App() {
   // url
   const url = `https://api.pexels.com/v1/search/?page=${Page}&per_page=${imagesPerPage}&query=${query}
 `;
-  
+
   const apiFetch = () => {
     setLoading(true);
     axios
       .get(url, {
         headers: {
           Authorization: process.env.REACT_APP_API_KEY,
-  
         },
       })
       .then(({ data }) => {
@@ -99,6 +98,7 @@ function App() {
           <>
             <Images images={_DATA} />
             <Pagination
+              sx={{ mt: 10, mb: 10,}}
               count={Math.ceil(totalResults / imagesPerPage)}
               page={Page}
               onChange={pag}
