@@ -4,7 +4,7 @@ import Image from "./Image";
 function Images({ images }) {
   return (
     <div className="images-container">
-      {images.map((image, index) => {
+      {images.currentData().map((image, index) => {
         const randNumber = Math.floor(Math.random() * images.length);
 
         if (randNumber === index) {

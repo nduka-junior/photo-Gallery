@@ -1,46 +1,49 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Images from "./components/Images";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import Error from "./components/Error";
 import Alert from "@mui/material/Alert";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Pagination } from "@mui/material";
-
+import SearchInput from "./components/SearchInput";
+import usePagination from "./usePagination";
 function App() {
   const [query, setQuery] = useState("tesla");
   const [images, setImages] = useState([]);
   const [Loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [totalResults, setTotalResults] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [imagesPerPage] = useState(2);
-  const url = `https://api.pexels.com/v1/search/?page=${currentPage}&per_page=${imagesPerPage}&query=${query}
-`;
+  const [imagesPerPage] = useState(4);
+  const [Page, setPage] = useState(1);
 
+  const _DATA = usePagination(images, imagesPerPage);
+  console.log(_DATA.currentPage + "current page");
+  // url
+  const url = `https://api.pexels.com/v1/search/?page=${Page}&per_page=${imagesPerPage}&query=${query}
+`;
+  
   const apiFetch = () => {
     setLoading(true);
     axios
       .get(url, {
         headers: {
-          Authorization:
-            "563492ad6f9170000100000158c9a241a4ef43e7958a6055fe9dd282",
+          Authorization: process.env.REACT_APP_API_KEY,
+  
         },
       })
       .then(({ data }) => {
         console.log(JSON.stringify(data.total_results) + "data");
         setTotalResults(data.total_results);
-        setCurrentPage(data.next_page);
         setLoading(false);
         setError(null);
+        // console.log(JSON.stringify(data.photos) + "data.photos");
         setImages(data.photos);
       })
       .catch(function (error) {
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
+          setLoading(false);
           setError({
             message: error.response.data.error,
             status: error.response.status,
@@ -60,61 +63,48 @@ function App() {
         console.log(error.config);
       });
   };
-  console.log(JSON.stringify(error) + "error");
+  // HANDLE PAGONAITON
+
   useEffect(() => {
     apiFetch();
+    console.log(pag + "pag");
   }, []);
+  const pag = (e, value) => {
+    setPage(value);
+    _DATA.jump(value);
+    apiFetch();
+    // console.log(currentPage + "before");
+    // console.log(value + "value");
+    // setCurrentPage(value);
+    // console.log(currentPage + "after");
+    // apiFetch();
+  };
 
   return (
     <div className="container">
       <h1> A Simple Photo Gallery</h1>
-      <div className="search-input">
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": { mr: 2, width: "30ch" },
-          }}
-          noValidate
-          autoComplete="off"
-          onChange={(e) => {
-            setQuery(e.target.value);
-          }}
-          onSubmit={(e) => {
-            e.preventDefault();
-            apiFetch();
-          }}
-        >
-          <div className="input-alignment">
-            <TextField
-              id="outlined-search"
-              label="Input 
-              Search Term"
-              type="search"
-            />
-
-            <Button
-              variant="outlined"
-              color="primary"
-              size="large"
-              onClick={() => apiFetch()}
-            >
-              Search
-            </Button>
-          </div>
-        </Box>
-      </div>
-      {images.length === 0 && Loading == false && error ==false ? (
+      <SearchInput setQuery={setQuery} apiFetch={apiFetch} />
+      {images.length === 0 && Loading === false && error == null ? (
         <Alert
           severity="error"
           sx={{
             mt: 3,
           }}
         >
-          It looks like there aren't many great matches for{" "}
+          It looks like there aren't many great matches for
           <strong>"{query}"</strong>
         </Alert>
       ) : (
-        <Images images={images} />
+        error == null && (
+          <>
+            <Images images={_DATA} />
+            <Pagination
+              count={Math.ceil(totalResults / imagesPerPage)}
+              page={Page}
+              onChange={pag}
+            />
+          </>
+        )
       )}
       {/* /ERROR HANDLING */}
       {error && (
@@ -123,21 +113,6 @@ function App() {
         </>
       )}
       {Loading && <CircularProgress disableShrink />}
-      <Pagination
-        count={Math.ceil(totalResults / imagesPerPage)}
-        onChange={(e) => { 
-          setCurrentPage(e.target.textContent);
-          apiFetch();
-        }
-        }
-        // getItemAriaLabel={(type, pages, selected) => {
-        //   if (selected === true) {
-        //     console.log(currentPage + "before");
-        //     setCurrentPage(pages);
-        //     console.log(currentPage + "after");
-        //   }
-        // }}
-      />
     </div>
   );
 }

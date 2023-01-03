@@ -1,7 +1,7 @@
 import React from 'react'
 
 function Error({ error, setLoading }) {
-    setLoading(false);
+    // setLoading(false);
   return (
     <div>
       <h3>{error.status}</h3>
