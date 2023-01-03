@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/nduka-junior/photo-Gallery/static/css/main.f46c427d.css",
+    "main.js": "/nduka-junior/photo-Gallery/static/js/main.6b9732fd.js",
+    "index.html": "/nduka-junior/photo-Gallery/index.html",
+    "main.f46c427d.css.map": "/nduka-junior/photo-Gallery/static/css/main.f46c427d.css.map",
+    "main.6b9732fd.js.map": "/nduka-junior/photo-Gallery/static/js/main.6b9732fd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f46c427d.css",
+    "static/js/main.6b9732fd.js"
+  ]
+}
