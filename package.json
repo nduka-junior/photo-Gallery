@@ -1,4 +1,4 @@
-{
+{  "homepage": "https://github.com/nduka-junior/photo-Gallery",
   "name": "photo-gallery",
   "version": "0.1.0",
   "private": true,
@@ -46,6 +46,6 @@
   },
   "devDependencies": {
     "gh-pages": "^4.0.0"
-  },
-  "homepage": "https://github.com/nduka-junior/photo-Gallery"
+  }
+
 }
