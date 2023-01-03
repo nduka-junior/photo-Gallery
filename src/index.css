@@ -18,6 +18,9 @@ body {
   font-weight: 700;
   margin-bottom: 3%;
 }
+.search-input{
+  width: 100%;
+}
 .input-alignment {
   display: flex;
   justify-content: center;
@@ -60,6 +63,10 @@ img {
 @media only screen and (max-width: 600px) {
   .images-container {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .container > h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
   }
 }
 

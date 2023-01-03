@@ -9,7 +9,7 @@ function SearchInput({setQuery,apiFetch}) {
       <Box
         component="form"
         sx={{
-          "& .MuiTextField-root": { mr: 2, width: "30ch" },
+          "& .MuiTextField-root": { mr: 2, width: "100%!important" },
         }}
         noValidate
         autoComplete="off"

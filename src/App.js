@@ -81,7 +81,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1> A Simple Photo Gallery</h1>
+      <h1 > A Simple Photo Gallery</h1>
       <SearchInput setQuery={setQuery} apiFetch={apiFetch} />
       {images.length === 0 && Loading === false && error == null ? (
         <Alert
