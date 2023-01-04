@@ -11,7 +11,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 10%;
+  margin: 5% 10%;
 }
 .container > h1 {
   font-size: 3rem;
@@ -67,6 +67,9 @@ img {
   .container > h1 {
     font-size: 1.5rem;
     letter-spacing: 1px;
+  }
+  .grid-rand-span > a >.image-title{
+    font-size: .34em;
   }
 }
 

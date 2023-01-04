@@ -17,7 +17,6 @@ function App() {
   const [Page, setPage] = useState(1);
 
   const _DATA = usePagination(images, imagesPerPage);
-  console.log(_DATA.currentPage + "current page");
   // url
   const url = `https://api.pexels.com/v1/search/?page=${Page}&per_page=${imagesPerPage}&query=${query}
 `;
@@ -31,25 +30,18 @@ function App() {
         },
       })
       .then(({ data }) => {
-        console.log(JSON.stringify(data.total_results) + "data");
         setTotalResults(data.total_results);
         setLoading(false);
         setError(null);
-        // console.log(JSON.stringify(data.photos) + "data.photos");
         setImages(data.photos);
       })
       .catch(function (error) {
         if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
           setLoading(false);
           setError({
             message: error.response.data.error,
             status: error.response.status,
           });
-          // console.log(error.response.data.error);
-          // console.log(error.response.status + "status");
-          // console.log(error.response.headers + "headers");
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -66,7 +58,6 @@ function App() {
 
   useEffect(() => {
     apiFetch();
-    console.log(pag + "pag");
   }, []);
   const pag = (e, value) => {
     setPage(value);
